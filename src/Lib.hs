@@ -1,6 +1,6 @@
 module Lib
     (
-    	someFunc,
+      someFunc,
       sum',
       maximum'
     )
@@ -18,3 +18,5 @@ maximum' [] = Nothing
 maximum' (x:xs) = case maximum' xs of
     Nothing -> Just x
     Just v -> if x > v then Just x else Just v
+
+    
