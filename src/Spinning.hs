@@ -1,6 +1,6 @@
 module Spinning where
 
-import Data.String (words)
+import           Data.String (words)
 
 spinWords :: String -> String
 spinWords str = unwords $ map singleWord (words str)
