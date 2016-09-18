@@ -1,6 +1,8 @@
 module SplitString
  where
 
+import Data.List.Split
+
 solution :: String -> [String]
 solution [] = []
 solution str = case str of
@@ -8,6 +10,6 @@ solution str = case str of
   [x] -> [x : "_"]
   [] -> []
 
-import Data.List.Split
+
 
 solution2 = takeWhile ((2 ==) . length) . chunksOf 2 . (++ "_")
