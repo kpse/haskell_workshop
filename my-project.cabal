@@ -21,6 +21,7 @@ library
                       , SumDigPow
                       , MultiplesOf3And5
                       , TitleCase
+                      , SplitString
   build-depends:       base >= 4.7 && < 5
                       , containers
   default-language:    Haskell2010
@@ -31,6 +32,7 @@ executable my-project-exe
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , containers
+                     , split
                      , my-project
   default-language:    Haskell2010
 
