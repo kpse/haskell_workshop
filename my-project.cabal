@@ -22,6 +22,7 @@ library
                       , MultiplesOf3And5
                       , TitleCase
                       , SplitString
+                      , Snail
                       , Tribonacci
   build-depends:       base >= 4.7 && < 5
                       , containers
