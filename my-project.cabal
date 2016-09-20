@@ -24,6 +24,7 @@ library
                       , SplitString
                       , Snail
                       , Tribonacci
+                      , Merge
                       , Pagination
   build-depends:       base >= 4.7 && < 5
                       , containers
