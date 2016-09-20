@@ -25,6 +25,7 @@ library
                       , Snail
                       , Tribonacci
                       , Merge
+                      , PalindromeChain
                       , Pagination
   build-depends:       base >= 4.7 && < 5
                       , containers
