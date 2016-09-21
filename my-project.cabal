@@ -26,6 +26,7 @@ library
                       , Tribonacci
                       , Merge
                       , PalindromeChain
+                      , Hamming
                       , Pagination
   build-depends:       base >= 4.7 && < 5
                       , containers
