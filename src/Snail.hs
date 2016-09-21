@@ -1,4 +1,6 @@
-module Snail where
+module Snail
+  (snail)
+  where
 
 import Data.List (transpose)
 
