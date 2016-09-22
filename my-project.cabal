@@ -28,6 +28,7 @@ library
                       , PalindromeChain
                       , Hamming
                       , EscapeTheMines
+                      , MoleculeToAtoms
                       , Pagination
   build-depends:       base >= 4.7 && < 5
                       , containers
@@ -48,6 +49,7 @@ test-suite my-project-test
   main-is:             Spec.hs
   build-depends:       base
                      , hspec
+                     , HUnit
                      , QuickCheck
                      , my-project
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
@@ -62,6 +64,7 @@ test-suite hspec
   type: exitcode-stdio-1.0
   build-depends: base
                , hspec
+               , HUnit
                , QuickCheck
                , my-project
   hs-source-dirs: test
