@@ -14,7 +14,7 @@ takePieces [] = []
 takePieces input =  case (elem, rest) of
       (x:xs, _) | (not.isUpper) x -> [("Not a valid molecule", -1)]
       (_, x:xs) | isDigit x ->
-        let count = read (takeWhile isDigit rest) :: Int
+        let count = readCount $ takeWhile isDigit rest
             elems = [ (name, 1) | name <- splitCamelCase elem ]
           in
             init elems ++ [((fst . last) elems, count)] ++ takePieces (dropWhile isDigit rest)
@@ -30,9 +30,13 @@ readBrackets input = case head input of
   open | open `elem` brackets ->
     let (inBracket,end) = span (\w -> Just w /= closeBrackets open) $ tail input in
       case end of
-        end@(x:xs) | closeBrackets open == Just x -> [ (a, c * read (takeWhile isDigit xs) :: Int ) | (a, c) <- readBrackets inBracket]
+        end@(x:xs) | closeBrackets open == Just x -> [(a, c * readCount (takeWhile isDigit xs) ) | (a, c) <- readBrackets inBracket  ] ++ readBrackets (dropWhile isDigit xs)
         _ -> [("Mismatched parenthesis", -1)]
   _ -> takePieces normal ++ readBrackets inBracket where (normal,inBracket) = span (`notElem` brackets) input
+
+readCount :: String -> Int
+readCount [] = 1
+readCount str = read str :: Int
 
 closeBrackets :: Char -> Maybe Char
 closeBrackets '(' = Just ')'
