@@ -11,10 +11,7 @@ parseMolecule formula = case readBrackets formula of
 -- one Element. one Digit
 takePieces :: String -> [(String,Int)]
 takePieces [] = []
-takePieces input = let elem = takeWhile isAlpha input
-                       rest = dropWhile isAlpha input
-  in
-    case (elem, rest) of
+takePieces input =  case (elem, rest) of
       (x:xs, _) | (not.isUpper) x -> [("Not a valid molecule", -1)]
       (_, x:xs) | isDigit x ->
         let count = read (takeWhile isDigit rest) :: Int
@@ -23,8 +20,9 @@ takePieces input = let elem = takeWhile isAlpha input
             init elems ++ [((fst . last) elems, count)] ++ takePieces (dropWhile isDigit rest)
       ([], _) -> []
       _ -> (elem, 1) : takePieces rest
+      where (elem, rest) = span isAlpha input
 
-brackets = ['(', ')', '[', ']', '{', '}']
+brackets = "()[]{}"
 
 readBrackets :: String -> [(String,Int)]
 readBrackets [] = []
@@ -34,7 +32,7 @@ readBrackets input = case head input of
       case end of
         end@(x:xs) | closeBrackets open == Just x -> [ (a, c * read (takeWhile isDigit xs) :: Int ) | (a, c) <- readBrackets inBracket]
         _ -> [("Mismatched parenthesis", -1)]
-  _ -> let (normal,inBracket) = span (`notElem` brackets) input in takePieces normal ++ readBrackets inBracket
+  _ -> takePieces normal ++ readBrackets inBracket where (normal,inBracket) = span (`notElem` brackets) input
 
 closeBrackets :: Char -> Maybe Char
 closeBrackets '(' = Just ')'
@@ -51,4 +49,5 @@ splitElem (name, count) = [ (atom, count) | atom <- splitCamelCase name]
 
 splitCamelCase :: String -> [String]
 splitCamelCase [] = []
+splitCamelCase [x] = [[x]]
 splitCamelCase arr = foldl (\acc i -> if isUpper i then acc ++ [[i]] else init acc ++ [last acc ++ [i]]) [] arr
