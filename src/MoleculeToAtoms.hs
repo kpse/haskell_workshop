@@ -14,10 +14,11 @@ takePieces [] = []
 takePieces input =  case (elem, rest) of
       (x:xs, _) | (not.isUpper) x -> [("Not a valid molecule", -1)]
       (_, x:xs) | isDigit x ->
-        let count = readCount $ takeWhile isDigit rest
+        let (countExp, restExp) = span isDigit rest
+            count = readCount countExp
             elems = [ (name, 1) | name <- splitCamelCase elem ]
           in
-            init elems ++ [((fst . last) elems, count)] ++ takePieces (dropWhile isDigit rest)
+            init elems ++ [((fst . last) elems, count)] ++ takePieces restExp
       ([], _) -> []
       _ -> (elem, 1) : takePieces rest
       where (elem, rest) = span isAlpha input
@@ -28,10 +29,12 @@ readBrackets :: String -> [(String,Int)]
 readBrackets [] = []
 readBrackets input = case head input of
   open | open `elem` brackets ->
-    let (inBracket,end) = span (\w -> Just w /= closeBrackets open) $ tail input in
-      case end of
-        end@(x:xs) | closeBrackets open == Just x -> [(a, c * readCount (takeWhile isDigit xs) ) | (a, c) <- readBrackets inBracket  ] ++ readBrackets (dropWhile isDigit xs)
-        _ -> [("Mismatched parenthesis", -1)]
+    case end of
+      end@(x:xs) | closeBrackets open == Just x ->
+        [(a, c * readCount current ) | (a, c) <- readBrackets inBracket  ] ++ readBrackets rest
+        where (current, rest) = span isDigit xs
+      _ -> [("Mismatched parenthesis", -1)]
+    where (inBracket,end) = span (\w -> Just w /= closeBrackets open) $ tail input
   _ -> takePieces normal ++ readBrackets inBracket where (normal,inBracket) = span (`notElem` brackets) input
 
 readCount :: String -> Int
