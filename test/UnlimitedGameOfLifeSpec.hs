@@ -39,11 +39,11 @@ spec = describe ("Glider<br>" ++ htmlize start) $ do
     assertBool errorMsg (actual == end)
   it "Glider 2" $ do
       let actual = getGeneration start 2
-          errorMsg = intercalate "<br>" ["expected:", htmlize end, "got:" , htmlize actual]
+          errorMsg = intercalate "<br>" ["expected:", htmlize end2, "got:" , htmlize actual]
 
       assertBool errorMsg (actual == end2)
-  it "Glider 100 " $ do
-      let actual = getGeneration start3 10
-          errorMsg = intercalate "<br>" ["expected:", htmlize end, "got:" , htmlize actual]
+  it "Glider 16 " $ do
+      let actual = getGeneration start3 16
+          errorMsg = intercalate "<br>" ["expected:", htmlize end3, "got:" , htmlize actual]
 
       assertBool errorMsg (actual == end3)

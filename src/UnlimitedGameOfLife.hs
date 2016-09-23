@@ -1,29 +1,29 @@
 module UnlimitedGameOfLife where
 
-import Data.Function (on)
-import Data.List (groupBy, sort, splitAt, transpose)
+import           Data.List (sort, splitAt, transpose)
 -- import Debug.Trace
 
 type Pos = (Int, Int)
 
 getGeneration :: [[Int]] -> Int -> [[Int]]
-getGeneration world gen = case gen of
-  0 -> world
-  n -> getGeneration newWorld (gen - 1)
+getGeneration world 0 = world
+getGeneration world gen = getGeneration newWorld (gen - 1)
     where
       -- w = trace ("round n = " ++ show n ++ " new world = " ++ show newWorld ) newWorld
       newWorld = construct (length (head expandedWorld)) posInfo
-      posInfo = [ ((row, col), nextRound (col,row) expandedWorld) | row <-  [0 .. length expandedWorld - 1], col <- [0 .. length (head expandedWorld) - 1] ]
+      posInfo = [ ((row, col), nextRound (col,row) expandedWorld) | row <-  rows, col <- cols]
+      rows = [0 .. length expandedWorld - 1]
+      cols = [0 .. length (head expandedWorld) - 1]
       expandedWorld = expand world
 
 nextRound :: Pos -> [[Int]] -> Int
-nextRound (x,y) world = let fate = sum $ map (\(a, b) -> world !! b !! a) $ neighbors (x, y) world
-                            current = world !! y !! x
-                          in
-                          case fate of
-                            n | n < 2 || n > 3 -> 0
-                            n | n == 3 && current == 0 -> 1
-                            _ -> current
+nextRound (x,y) world = case fate of
+                          n | n < 2 || n > 3 -> 0
+                          n | n == 3 && current == 0 -> 1
+                          _ -> current
+                        where
+                          fate = sum $ map (\(a, b) -> world !! b !! a) $ neighbors (x, y) world
+                          current = world !! y !! x
 
 expand :: [[Int]] -> [[Int]]
 expand [] = []
@@ -33,16 +33,17 @@ expand world = transpose $ (transpose . transpose) [sideBar] ++ transpose ([topB
 
 compact :: [[Int]] -> [[Int]]
 compact [] = [[]]
-compact a = (transpose . transpose . compact' .compact') a
-  where compact' = transpose . reverse . dropWhile (\w -> 0 == sum w) . reverse . dropWhile (\w -> 0 == sum w)
+compact l = (transpose . transpose . compact' .compact') l
+  where compact' = transpose . reverse . removeEmptyLine . reverse . removeEmptyLine
+        removeEmptyLine = dropWhile (\w -> 0 == sum w)
 
 neighbors :: Pos -> [[Int]] -> [Pos]
-neighbors (x, y) world = filter  (\(a, b) -> onMap a b && (a,b)/=(x,y)) [(dx + x, dy + y) | dx <- [-1, 0, 1], dy <- [-1, 0, 1]]
-  where onMap x y = x `elem` [0 .. length (head world) - 1] && y  `elem` [0 .. length world - 1]
+neighbors (x, y) world = filter onMap [(dx + x, dy + y) | dx <- [-1, 0, 1], dy <- [-1, 0, 1], (dx, dy) /= (0, 0)]
+  where onMap (x,y) = x `elem` [0 .. length (head world) - 1] && y `elem` [0 .. length world - 1]
 
 
 construct :: Int -> [(Pos, Int)] -> [[Int]]
-construct rowLength world = compact $ splitEvery rowLength [ life | (pos, life) <- sort world]
+construct rowLength world = compact $ splitEvery rowLength [ life | (_, life) <- sort world]
 
 splitEvery _ [] = []
 splitEvery n list = first : splitEvery n rest
