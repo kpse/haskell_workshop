@@ -30,6 +30,7 @@ library
                       , EscapeTheMines
                       , MoleculeToAtoms
                       , Permutations
+                      , UnlimitedGameOfLife
                       , Pagination
   build-depends:       base >= 4.7 && < 5
                       , containers
