@@ -3,9 +3,8 @@ module Spinning where
 import           Data.String (words)
 
 spinWords :: String -> String
-spinWords str = unwords $ map singleWord (words str)
+spinWords = unwords . map singleWord . words 
 
 singleWord :: String -> String
-singleWord word = case length word of
-  x | 5 <= x -> reverse word
-  _ -> word
+singleWord word | length word < 5 = word
+singleWord word = reverse word
