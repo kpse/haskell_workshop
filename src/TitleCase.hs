@@ -19,6 +19,6 @@ checkWords :: String -> String -> Bool
 checkWords minor word = lowerString word `elem` map lowerString (words minor)
 
 transform :: String -> [String] -> String -> [String]
-transform minor acc word = case checkWords minor word of
-  True -> acc ++ [lowerString word]
-  False -> acc ++ [captialWord word]
+transform minor acc word = if checkWords minor word
+  then acc ++ [lowerString word]
+  else acc ++ [captialWord word]

@@ -8,7 +8,6 @@ solution [] = []
 solution str = case str of
   x:x1:xs -> take 2 str : solution xs
   [x] -> [x : "_"]
-  [] -> []
 
 
 
