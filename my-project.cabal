@@ -32,6 +32,7 @@ library
                       , Permutations
                       , UnlimitedGameOfLife
                       , FindingAnAppointment
+                      , Fibonacci
                       , Pagination
   build-depends:       base >= 4.7 && < 5
                       , containers
