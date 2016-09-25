@@ -13,6 +13,7 @@ spec = describe "main" $ do
 
   describe "Negative values" $ do
     it "fib -6" $ fib (-6) `shouldBe` -8
+    it "fib -6" $ fib (-7) `shouldBe` 13
     it "fib -96" $ fib (-96) `shouldBe` -51680708854858323072
 
   describe "Larger values" $ do
