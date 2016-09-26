@@ -1,20 +1,20 @@
 module Braces where
 
+import Data.List (find)
+
 validBraces :: String -> Bool
 validBraces [] = True
 validBraces input = case head input of
-  open | open `elem` brackets ->
-    case end of
-      end@(x:xs) | closeBrackets open == Just x ->
-        validBraces inBracket && validBraces xs
+  open | open `elem` allOpenBrackets ->
+    case closeAndAfter of
+      (closeBracket:rest) | closeBrackets open == Just closeBracket ->
+        validBraces inBrackets && validBraces rest
       _ -> False
-    where (inBracket,end) = span (\w -> Just w /= closeBrackets open) $ tail input
+    where (inBrackets,closeAndAfter) = span ((/= closeBrackets open) . Just) $ tail input
   _ -> False
 
 closeBrackets :: Char -> Maybe Char
-closeBrackets '(' = Just ')'
-closeBrackets '{' = Just '}'
-closeBrackets '[' = Just ']'
-closeBrackets _ = Nothing
+closeBrackets c = find ((c ==) . head) brackets >>= Just . last
 
-brackets = "()[]{}"
+brackets = ["()", "[]", "{}"]
+allOpenBrackets = map head brackets
