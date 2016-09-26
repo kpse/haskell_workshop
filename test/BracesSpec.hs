@@ -8,3 +8,5 @@ spec = describe "validBraces" $ do
       validBraces "[([)"           `shouldBe` False
       validBraces "())({}}{()][][" `shouldBe` False
       validBraces "({})[({})]"     `shouldBe` True
+    it "should work with nested" $
+      validBraces "(([]()(){}){(){{}}{{}}})" `shouldBe` True

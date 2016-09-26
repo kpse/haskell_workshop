@@ -1,20 +1,25 @@
 module Braces where
 
-import Data.List (find)
+import Data.List
 
 validBraces :: String -> Bool
 validBraces [] = True
-validBraces input = case head input of
-  open | open `elem` allOpenBrackets ->
-    case closeAndAfter of
-      (closeBracket:rest) | closeBracketFor open == Just closeBracket ->
-        validBraces inBrackets && validBraces rest
-      _ -> False
-    where (inBrackets,closeAndAfter) = span ((/= closeBracketFor open) . Just) $ tail input
-  _ -> False
+validBraces [x] = False
+validBraces input | length (filter (`elem` openBrackets) input) /= length (filter (`elem` closeBrackets) input) = False
+validBraces input = all (==True) $ map check brackets
+  where check p = ((== []) . remove p. filter (`elem` p)) input
 
-closeBracketFor :: Char -> Maybe Char
-closeBracketFor c = find ((c ==) . head) brackets >>= Just . last
 
 brackets = ["()", "[]", "{}"]
-allOpenBrackets = map head brackets
+openBrackets = map head brackets
+closeBrackets = map last brackets
+
+remove :: String -> String -> String
+remove _ [] = []
+remove p input = if length result < length input then remove p result else result
+  where result = replace p input
+
+replace :: String -> String -> String
+replace _ [] = []
+replace p (x1:x2:xs) | p == [x1,x2] = replace p xs
+replace p (x:xs) = x : replace p xs
