@@ -30,6 +30,7 @@ library
                       , EscapeTheMines
                       , MoleculeToAtoms
                       , Permutations
+                      , FunctionEvaluator
                       , UnlimitedGameOfLife
                       , FindingAnAppointment
                       , Fibonacci
