@@ -29,8 +29,8 @@ spec = describe "FunctionEvaluator" $ do
       evaluateFunction heigth (2, 14) `shouldBe` 105
       evaluateFunction foo 20         `shouldBe` 253
 
-    it "should work for some advanced tests" $ do
-      evaluateFunction fibonacci 40     `shouldBe` 354224848179261915075
+    -- it "should work for some advanced tests" $ do
+      -- evaluateFunction fibonacci 40     `shouldBe` 354224848179261915075
       -- evaluateFunction coinchange (500, length coinlist) `shouldBe` 146948
     --   evaluateFunction heigth (100, 150) `shouldBe` 1427228946471605830963606579751332537625641011
     --   evaluateFunction foo (10^12-3)     `shouldBe` 10393063677856661930403634886614144354995461022573498
