@@ -1,6 +1,6 @@
 module Sudoku where
 
-import Data.List (transpose, find)
+import Data.List (transpose, find, nub)
 import Data.Maybe
 
 type Line = [Int]
@@ -12,11 +12,23 @@ sudoku source = fromMaybe [] res
     res = find correct $ randomFill source
 
 correct :: Table -> Bool
-correct source = allEqual countPerLine && allEqual conunPerRow
+correct source = allEqual countPerLine && allEqual conunPerRow && subTableCorrect source
   where
     allEqual line = maximum line == minimum line
     countPerLine = map sum source
     conunPerRow = map sum $ transpose source
+
+slice :: Int -> Int -> [[Int]] -> [[Int]]
+slice from to xs = take (to - from + 1) (drop from xs)
+
+subTableCorrect :: [[Int]] -> Bool
+subTableCorrect [] = True
+subTableCorrect table = sub1 && sub2 && sub3
+  where
+    sub1 = 9 == (length . nub) (concatMap (take 3) $ take 3 table)
+    sub2 = 9 == (length . nub) (concatMap (take 3 . drop 3) $ (take 3 . drop 3) table)
+    sub3 = 9 == (length . nub) (concatMap (take 3 . drop 6) $ (take 3 . drop 6) table)
+
 
 randomFill :: Table -> [Table]
 randomFill table = case other of
