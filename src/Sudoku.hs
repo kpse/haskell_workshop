@@ -1,14 +1,37 @@
 module Sudoku where
 
-sudoku :: [[Int]] -> [[Int]]
-sudoku a = solution
+import Data.List (transpose, find)
+import Data.Maybe
 
-solution = [[5,3,4,6,7,8,9,1,2],
-            [6,7,2,1,9,5,3,4,8],
-            [1,9,8,3,4,2,5,6,7],
-            [8,5,9,7,6,1,4,2,3],
-            [4,2,6,8,5,3,7,9,1],
-            [7,1,3,9,2,4,8,5,6],
-            [9,6,1,5,3,7,2,8,4],
-            [2,8,7,4,1,9,6,3,5],
-            [3,4,5,2,8,6,1,7,9]]
+type Line = [Int]
+type Table = [Line]
+
+sudoku :: Table -> Table
+sudoku source = fromMaybe [] res
+  where
+    res = find correct $ randomFill source
+
+correct :: Table -> Bool
+correct source = allEqual countPerLine && allEqual conunPerRow
+  where
+    allEqual line = maximum line == minimum line
+    countPerLine = map sum source
+    conunPerRow = map sum $ transpose source
+
+randomFill :: Table -> [Table]
+randomFill table = case other of
+  [] -> [table]
+  (zero:rest) -> concatMap randomFill [start ++ [x] ++ rest | x <- lineReplace table zero]
+  where
+    row = transpose table !! length start
+    (start, other) = span (notElem 0) table
+
+
+lineReplace :: Table -> Line -> [Line]
+lineReplace table line = case other of
+  [] -> [line]
+  (zero:rest) -> concatMap (lineReplace table) [ start ++ [x] ++ rest | x <- pick]
+  where
+    pick = [ x | x <- [1..9], x `notElem` line, x `notElem` row]
+    row = transpose table !! length start
+    (start, other) = span (/=0) line
