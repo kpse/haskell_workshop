@@ -8,6 +8,14 @@ examples = do
     lastDigit []         `shouldBe` 1
     lastDigit [0,0]      `shouldBe` 1 -- 0 ^ 0
     lastDigit [0,0,0]    `shouldBe` 0 -- 0^(0 ^ 0) = 0^1 = 0
+    lastDigit [0,0,1]    `shouldBe` 1
+    lastDigit [2,0,0]    `shouldBe` 2
+    lastDigit [0,0,2]    `shouldBe` 1
+    lastDigit [2,2,0]    `shouldBe` 2
+    lastDigit [10,0,0]    `shouldBe` 0
+    lastDigit [0,10,1,0]    `shouldBe` 0
+    lastDigit [7,10,0,0]    `shouldBe` 9
+    lastDigit [2,10,1,0]    `shouldBe` 4
     lastDigit [1,2]      `shouldBe` 1
     lastDigit [3,4,5]    `shouldBe` 1
     lastDigit [4,3,6]    `shouldBe` 4
