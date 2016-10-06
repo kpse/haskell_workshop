@@ -1,7 +1,6 @@
 module TitleCase
     where
 
-import Data.List (map)
 import Data.Char (toUpper, toLower)
 
 titleCase :: String -> String -> String
@@ -13,7 +12,7 @@ captialWord [] = []
 captialWord (x:xs) = toUpper x : map toLower xs
 
 lowerString :: String -> String
-lowerString (x:xs) = toLower x : map toLower xs
+lowerString arr@(x:xs) = map toLower arr
 
 checkWords :: String -> String -> Bool
 checkWords minor word = lowerString word `elem` map lowerString (words minor)
