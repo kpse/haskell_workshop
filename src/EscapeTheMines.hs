@@ -1,7 +1,7 @@
 module EscapeTheMines where
 
-import Data.List (minimumBy)
-import Data.Function (on)
+import           Data.Function (on)
+import           Data.List     (minimumBy)
 
 type XY = (Int,Int)
 data Move = U | D | R | L deriving (Eq, Show)

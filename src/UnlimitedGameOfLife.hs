@@ -1,7 +1,6 @@
 module UnlimitedGameOfLife where
 
 import           Data.List (sort, splitAt, transpose)
--- import Debug.Trace
 
 type Pos = (Int, Int)
 
