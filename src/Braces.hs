@@ -17,9 +17,9 @@ closeBrackets = map last brackets
 remove :: String -> String -> String
 remove _ [] = []
 remove p input = if length result < length input then remove p result else result
-  where result = replace p input
+  where result = remove2Chars p input
 
-replace :: String -> String -> String
-replace _ [] = []
-replace p (x1:x2:xs) | p == [x1,x2] = replace p xs
-replace p (x:xs) = x : replace p xs
+remove2Chars :: String -> String -> String
+remove2Chars _ [] = []
+remove2Chars p (x1:x2:xs) | p == [x1,x2] = remove2Chars p xs
+remove2Chars p (x:xs) = x : remove2Chars p xs

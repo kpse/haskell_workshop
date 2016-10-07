@@ -4,7 +4,7 @@ module TitleCase
 import Data.Char (toUpper, toLower)
 
 titleCase :: String -> String -> String
-titleCase minor [] = []
+titleCase _ [] = []
 titleCase minor title = unwords $ captialWord (head (words title)) : foldl (transform minor) [] (tail $ words title)
 
 captialWord :: String -> String
@@ -12,7 +12,7 @@ captialWord [] = []
 captialWord (x:xs) = toUpper x : map toLower xs
 
 lowerString :: String -> String
-lowerString arr@(x:xs) = map toLower arr
+lowerString = map toLower
 
 checkWords :: String -> String -> Bool
 checkWords minor word = lowerString word `elem` map lowerString (words minor)
