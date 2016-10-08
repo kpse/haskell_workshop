@@ -38,6 +38,7 @@ library
                       , Sudoku
                       , Spiral
                       , LastDigit
+                      , PascalsTriangle
                       , Pagination
   build-depends:       base >= 4.7 && < 5
                       , containers
