@@ -39,6 +39,7 @@ library
                       , Spiral
                       , LastDigit
                       , PascalsTriangle
+                      , PointInPolygon
                       , Pagination
   build-depends:       base >= 4.7 && < 5
                       , containers
