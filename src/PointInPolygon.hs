@@ -1,17 +1,27 @@
 module PointInPolygon where
 
+import Data.List (intercalate)
+
 type Point = (Double, Double)
+type Line = (Point, Point)
 
 pointInPoly :: [Point] -> Point -> Bool
-pointInPoly poly point = all (>= 0) tolerate || all (<= 0) tolerate
+pointInPoly poly point = odd intersactions
   where
-    tolerate = map (\w -> if (abs(w) < 0.0000001) then 0 else w) res
-    res = allGradients poly point
+    intersactions = length $ filter rayTrace lines
+    lines = zip poly (tail $ cycle poly)
+    rayTrace = isIntersaction ((-100, snd point), point)
 
-gradient :: Point -> Point -> Point -> Double
-gradient (x,y) (x1, y1) (x2, y2) = (x2-x1)*(y-y1) - (y2-y1)*(x-x1)
-
-allGradients :: [Point] -> Point -> [Double]
-allGradients points p = map (\(p1, p2) -> gradient p p1 p2) pairs
+isIntersaction :: Line -> Line -> Bool
+isIntersaction (a, b) (c, d) =  sig r1 r2 && sig r3 r4
   where
-    pairs = zip points $ (tail points) ++ [head points]
+    sig l r = l * r < 0
+    r1 = abCrossAc a b c
+    r2 = abCrossAc a b d
+    r3 = abCrossAc c d a
+    r4 = abCrossAc c d b
+
+abCrossAc :: Point -> Point -> Point -> Double
+abCrossAc (x1, y1) (x2, y2) (x3, y3) = cross ((x2 - x1), (y2 - y1)) ((x3 - x1), (y3 - y1))
+  where
+    cross (x1,y1) (x2,y2) = x1 * y2 - x2 * y1
