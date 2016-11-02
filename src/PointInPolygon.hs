@@ -1,7 +1,5 @@
 module PointInPolygon where
 
-import Data.List (intercalate)
-
 type Point = (Double, Double)
 type Line = (Point, Point)
 
