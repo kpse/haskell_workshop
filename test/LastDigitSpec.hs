@@ -17,6 +17,7 @@ examples = do
     lastDigit [0,0,1]    `shouldBe` 1
   it "should work for some examples 2" $ do
     lastDigit [0,0,2]    `shouldBe` 1
+    lastDigit [0,0,2,2]    `shouldBe` 1
     lastDigit [2,2,0]    `shouldBe` 2
     lastDigit [10,0,0]    `shouldBe` 0
     lastDigit [0,10,1,0]    `shouldBe` 0
