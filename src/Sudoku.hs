@@ -1,6 +1,6 @@
 module Sudoku where
 
-import Data.List (transpose, find, nub)
+import Data.List (transpose, find)
 import Data.Maybe
 
 type Line = [Int]

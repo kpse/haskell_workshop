@@ -2,7 +2,6 @@ module HammingSpec where
 
 import Hamming
 import Test.Hspec
-import Test.QuickCheck
 
 
 spec = describe "hamming" $ do

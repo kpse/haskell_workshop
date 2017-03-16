@@ -1,7 +1,5 @@
 module Braces where
 
-import           Data.List
-
 validBraces :: String -> Bool
 validBraces [] = True
 validBraces [x] = False

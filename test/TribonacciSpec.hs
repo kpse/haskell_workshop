@@ -2,7 +2,6 @@ module TribonacciSpec where
 
 import Tribonacci (tribonacci)
 import Test.Hspec
-import Test.QuickCheck
 
 spec = describe "Tribonacci" $
   it "should work for some examples" $ do

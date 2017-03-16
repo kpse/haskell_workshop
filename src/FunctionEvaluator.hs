@@ -2,8 +2,6 @@ module FunctionEvaluator where
 
 import Debug.Trace
 
-import Data.List (sort)
-
 -- evaluateFunction :: (Ord a, Show a, Show b)=> (a -> Either b ([a], [b] -> b)) -> a -> b
 -- evaluateFunction f n = case trace ("new entry ... " ++ show n) result of
 --       Left l -> trace ("Left - l " ++ show l) l
@@ -13,7 +11,7 @@ import Data.List (sort)
 --       result = f n
 
 evaluateFunction :: (Ord a, Show a, Show b)=> (a -> Either b ([a], [b] -> b)) -> a -> b
-evaluateFunction f n = case trace ("new entry ..") result of
+evaluateFunction f n = case trace "new entry .." result of
       Left l -> trace ("Left - l " ++ show l) l
       Right (as, fb) -> let all = map chain as in trace ("all - show " ++ show all) fb all
     where

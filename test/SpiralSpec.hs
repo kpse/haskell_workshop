@@ -3,8 +3,6 @@ where
 
 import Spiral
 import Test.Hspec
-import Test.QuickCheck
-import Data.List
 
 
 -- You may use this type to display your output.

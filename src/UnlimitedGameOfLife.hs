@@ -1,6 +1,6 @@
 module UnlimitedGameOfLife where
 
-import           Data.List (sort, splitAt, transpose)
+import           Data.List (sort, transpose)
 
 type Pos = (Int, Int)
 

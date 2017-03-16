@@ -1,7 +1,6 @@
 module SplitStringSpec where
 import SplitString (solution)
 import Test.Hspec
-import Test.QuickCheck
 
 spec = describe "solution" $ do
     it "gives the correct result for \"abc\"" $

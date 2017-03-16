@@ -1,7 +1,6 @@
 module Pagination where
 
 import Data.List.Split (chunksOf)
-import Data.List (elemIndex)
 
 type Collection a = [a]
 type ItemsPerPage = Int
@@ -17,7 +16,7 @@ pageItemCount :: Collection a -> ItemsPerPage -> Int -> Maybe Int
 pageItemCount [] _ _ = Nothing
 pageItemCount _ _ page | page < 0 = Nothing
 pageItemCount _ n _ | n <= 0 = Nothing
-pageItemCount xs n page | page > (pageCount xs n) - 1 = Nothing
+pageItemCount xs n page | page > pageCount xs n - 1 = Nothing
 pageItemCount xs n page = Just $ (length . head . drop page . chunksOf n) xs
 
 pageIndex :: Collection a -> ItemsPerPage -> Int -> Maybe Int

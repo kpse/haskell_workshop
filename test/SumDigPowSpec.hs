@@ -3,7 +3,6 @@ module SumDigPowSpec where
 import SumDigPow (sumDigPow)
 
 import Test.Hspec
-import Test.QuickCheck
 import Text.Printf (printf)
 
 dotest :: Int -> Int -> [Int] -> Spec

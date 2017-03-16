@@ -1,11 +1,7 @@
 module TitleCaseSpec where
 
 import           TitleCase
-
 import           Test.Hspec
-import           Test.QuickCheck
-
-
 
 spec = describe "TitleCase" $
     it "change case" $ do
